@@ -1,6 +1,6 @@
 class Solution {
 private:
-    int solve(string s,int idx,unordered_map<string,int>& mp,int dp[]){
+    int solve(string s,int idx,unordered_map<string,int>& mp,int *dp){
         
         if(idx==s.size()) return 1;
         if(dp[idx]!=-1) return dp[idx];
