@@ -11,7 +11,7 @@ private:
             int row=q.front().first;
             int col=q.front().second;
             q.pop();
-            //now we will traverse in all the 8 directions 
+            //now we will traverse in all the 4 directions 
             for(int delRow=-1;delRow<=1;delRow++){
                 for(int delCol=-1;delCol<=1;delCol++){
                      if(delRow==-1&&delCol==0||delRow==0&&delCol==1
