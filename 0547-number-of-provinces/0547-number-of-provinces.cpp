@@ -1,6 +1,6 @@
 class Solution {
 private:
-    void dfs(int node,vector<int>& vis,vector<int> adjList[]){
+    void dfs(int node,vector<int>& vis,vector<vector<int>> adjList){
         
         vis[node]=1;
         
@@ -13,7 +13,7 @@ public:
     int findCircleNum(vector<vector<int>>& isConnected) {
         //first we will make the adjList from the adjMatrix
         int n=isConnected.size();
-        vector<int> adjList[n];
+        vector<vector<int>> adjList(n);
         
         for(int i=0;i<n;i++){
             for(int j=0;j<n;j++){
