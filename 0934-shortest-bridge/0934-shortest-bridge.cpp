@@ -17,6 +17,22 @@ private:
             }
         }
     }
+    
+    int getMinFlips(vector<pair<int,int>> &island1,vector<pair<int,int>> &island2){
+        int minDist=INT_MAX;
+        for(int i=0;i<island1.size();i++){
+            for(int j=0;j<island2.size();j++){
+                int x1=island1[i].first;
+                int x2=island2[j].first;
+                int y1=island1[i].second;
+                int y2=island2[j].second;
+                
+                int dist=abs(x1-x2)+abs(y1-y2)-1;
+                minDist=min(minDist,dist);
+            }
+        }
+        return minDist;
+    }
 public:   
     int shortestBridge(vector<vector<int>>& grid) {
         //find all the coordinates of both the islands;
@@ -41,18 +57,8 @@ public:
                 }
             }
         }
-        int minDist=INT_MAX;
-        for(int i=0;i<island1.size();i++){
-            for(int j=0;j<island2.size();j++){
-                int x1=island1[i].first;
-                int x2=island2[j].first;
-                int y1=island1[i].second;
-                int y2=island2[j].second;
-                
-                int dist=abs(x1-x2)+abs(y1-y2)-1;
-                minDist=min(minDist,dist);
-            }
-        }
+        int minDist=getMinFlips(island1,island2);
+
         return minDist;
     }
 };
