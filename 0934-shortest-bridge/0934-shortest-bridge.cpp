@@ -4,16 +4,15 @@ private:
         return nRow>= 0 && nRow<n && nCol>=0 && nCol<n;
     }
     void dfs(int row,int col, vector<vector<int>>& grid,vector<pair<int,int>>& island,
-            vector<vector<int>> &vis,vector<int>& delRow,vector<int>& delCol){
+            vector<int>& delRow,vector<int>& delCol){
         int n=grid.size();
         grid[row][col]=0;
-        // vis[row][col]=1;
         island.push_back({row,col});
         for(int i=0;i<4;i++){
             int nRow=row+delRow[i];
             int nCol=col+delCol[i];
             if(isValid(nRow,nCol,n) && grid[nRow][nCol]==1){
-                dfs(nRow,nCol,grid,island,vis,delRow,delCol);
+                dfs(nRow,nCol,grid,island,delRow,delCol);
             }
         }
     }
@@ -39,7 +38,7 @@ public:
         int n=grid.size();
         vector<pair<int,int>> island1;
         vector<pair<int,int>> island2;
-        vector<vector<int>> vis(n,vector<int>(n,0));
+
         int islandCnt=0;
         for(int row=0;row<n;row++){
             for(int col=0;col<n;col++){
@@ -48,11 +47,10 @@ public:
                 if(grid[row][col]==1){
                     islandCnt++;
                     if(islandCnt==1){
-                        dfs(row,col,grid,island1,vis,delRow,delCol);
+                        dfs(row,col,grid,island1,delRow,delCol);
                     }
                     else if(islandCnt==2){
-                        vis.clear();
-                        dfs(row,col,grid,island2,vis,delRow,delCol);
+                        dfs(row,col,grid,island2,delRow,delCol);
                     }
                 }
             }
