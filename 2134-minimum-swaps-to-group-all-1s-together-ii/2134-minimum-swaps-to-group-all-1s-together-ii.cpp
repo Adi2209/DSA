@@ -9,13 +9,13 @@ public:
         
         int window=cntOne;
         int maxOnes=0,cnt=0;
-        for(int i=0;i<window;i++){
-            if(nums[i]==1) cnt++;
+        for(int ind=0;ind<window;ind++){
+            if(nums[ind]==1) cnt++;
         }
         maxOnes = cnt;
-        for(int i=window;i<n+window;i++){
-            if(nums[i-window]==1) cnt--;
-            if(nums[i%n]==1) cnt++; 
+        for(int ind=window;ind<n+window;ind++){
+            if(nums[ind-window]==1) cnt--;
+            if(nums[ind%n]==1) cnt++; 
             maxOnes = max(maxOnes,cnt);
         }
         return(window - maxOnes); 
