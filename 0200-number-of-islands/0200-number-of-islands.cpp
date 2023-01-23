@@ -1,47 +1,39 @@
 class Solution {
 private:
-    void bfs(int row,int col,vector<vector<int>>& vis,vector<vector<char>>& grid){
-        vis[row][col]=1;
-        queue<pair<int,int>> q;
-        q.push({row,col});
-        int n=grid.size();
-        int m=grid[0].size();
+    bool isValid(int nRow,int nCol,int rowSize,int colSize){
+        return nRow>=0  && nRow<rowSize && nCol>=0 && nCol<colSize;
+    }
+    void markIsland(int row,int col,vector<vector<char>>& grid,int rowSize,int colSize,vector<vector<char>> &vis){
+        char island='1';
+        vis[row][col]='2';
         
-        while(!q.empty()){
-            int row=q.front().first;
-            int col=q.front().second;
-            q.pop();
-            //now we will traverse in all the 4 directions 
-            for(int delRow=-1;delRow<=1;delRow++){
-                for(int delCol=-1;delCol<=1;delCol++){
-                     if(delRow==-1&&delCol==0||delRow==0&&delCol==1
-                        ||delRow==1&&delCol==0||delRow==0&&delCol==-1){
-                        int nRow=row+delRow;
-                        int nCol=col+delCol;
-                        if(nRow>=0 && nRow<n && nCol>=0 && nCol<m && grid[nRow][nCol]=='1'
-                          && !vis[nRow][nCol]){
-                            vis[nRow][nCol]=1;
-                            q.push({nRow,nCol});   
-                        }
-                    }
-                }
+        vector<int> delRow={-1,0,1,0};
+        vector<int> delCol={0,1,0,-1};
+        
+        for(int ind=0;ind<4;ind++){
+            int nRow=row+delRow[ind];
+            int nCol=col+delCol[ind];
+            if(isValid(nRow,nCol,rowSize,colSize) && vis[nRow][nCol]==island){
+                markIsland(nRow,nCol,grid,rowSize,colSize,vis);
             }
         }
     }
 public:
     int numIslands(vector<vector<char>>& grid) {
-        int n=grid.size();
-        int m=grid[0].size();
-        vector<vector<int>> vis(n,vector<int>(m,0));
-        int cnt=0;
-        for(int row=0;row<n;row++){
-            for(int col=0;col<m;col++){
-                if(!vis[row][col] && grid[row][col]=='1'){
-                    cnt++;
-                    bfs(row,col,vis,grid);
+        int rowSize=grid.size(),colSize=grid[0].size();
+        int islandCnt=0;
+        vector<vector<char>> vis(rowSize,vector<char>(colSize));
+        vis=grid;
+        //for marking purpose
+        char island='1';
+        for(int row=0;row<rowSize;row++){
+            for(int col=0;col<colSize;col++){
+                if(vis[row][col]==island){
+                    markIsland(row,col,grid,rowSize,colSize,vis);
+                    islandCnt++;
                 }
             }
         }
-        return cnt;
+        return islandCnt;
     }
 };
