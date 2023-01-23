@@ -1,50 +1,66 @@
+class oranges{
+    public:
+    int r,c,t;
+    oranges(int row,int col,int time){
+        this->r=row;
+        this->c=col;
+        this->t=time;
+    }
+};
 class Solution {
-public:
-    int orangesRotting(vector<vector<int>>& grid) {
-        int n=grid.size();
-        int m=grid[0].size();
+private:
+    void getQueue(queue<oranges>& q,vector<vector<int>>& grid,vector<vector<int>>& vis,int& cntFresh){
+        int rotten=2,fresh=1;
         
-        vector<vector<int>>  vis(n,vector<int>(m));
-        int cntFresh=0;
-        queue<pair<pair<int,int>,int >> q;
-
-        for(int row=0;row<n;row++){
-            for(int col=0;col<m;col++){
-                if(grid[row][col]==2){
-                    q.push({{row,col},0});
-                    vis[row][col]=2;
+        for(int row=0;row<grid.size();row++){
+            for(int col=0;col<grid[0].size();col++){
+                if(grid[row][col]==rotten){
+                    q.push({row,col,0});
+                    vis[row][col]=rotten;
                 }
+                if(grid[row][col]==fresh) cntFresh++;
                 else{
                     vis[row][col]=0;
                 }
-                if(grid[row][col]==1) cntFresh++;
             }
         }
-        
-        //no doing the bfs
-        int time=0;
-        vector<int> delRow{-1,0,1,0};
-        vector<int> delCol{0,1,0,-1};
-        int cnt=0;
-        
+    }
+    bool isValid(int nRow,int nCol,int rowSize,int colSize){
+        return nRow>=0 && nRow<rowSize && nCol>=0 && nCol<colSize;
+    }
+public:
+    int orangesRotting(vector<vector<int>>& grid) {
+        int rowSize=grid.size();
+        int colSize=grid[0].size();
+        queue<oranges> q;
+        vector<vector<int>> vis(rowSize,vector<int> (colSize));
+        int cntFresh=0;
+        //getting the queue ready initially and marking the visited array 
+        getQueue(q,grid,vis,cntFresh);
+        //queue is ready
+        //now doing the bfs
+        int minTime=0;
+        int currCntRotten=0;
+        int rotten=2,fresh=1;
         while(!q.empty()){
-            int r=q.front().first.first;
-            int c=q.front().first.second;
-            int t=q.front().second;
+            int row=q.front().r;
+            int col=q.front().c;
+            int time=q.front().t;
             q.pop();
-            time=max(time,t);
-            for(int i=0;i<4;i++){
-                int nRow=r+delRow[i];
-                int nCol=c+delCol[i];
-                if(nRow>=0 && nRow<n && nCol>=0 && nCol<m &&
-                   vis[nRow][nCol]==0 && grid[nRow][nCol]==1){
-                    q.push({{nRow,nCol},t+1});
-                    vis[nRow][nCol]=2;
-                    cnt++;
+            minTime=max(minTime,time);
+            vector<int> delRow={-1,0,1,0};
+            vector<int> delCol={0,1,0,-1};
+            for(int ind=0;ind<4;ind++){
+                int nRow=delRow[ind]+row;
+                int nCol=delCol[ind]+col;
+                if(isValid(nRow,nCol,rowSize,colSize) && vis[nRow][nCol]==0 && grid[nRow][nCol]==fresh){
+                    q.push({nRow,nCol,time+1});
+                    vis[nRow][nCol]=rotten;
+                    currCntRotten++;
                 }
             }
         }
-        
-        return cnt==cntFresh ?time:-1;
+        if(currCntRotten!=cntFresh) return -1;
+        return minTime;
     }
 };
