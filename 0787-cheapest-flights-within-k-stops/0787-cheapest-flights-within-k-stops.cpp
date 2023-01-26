@@ -9,13 +9,18 @@ class flight{
     
 };
 class Solution {
+private:
+    vector<vector<pair<int,int>>> getAdjList(vector<vector<int>>& flights,int n){
+        vector<vector<pair<int,int>>> adjList(n);
+        for(auto it:flights){
+            adjList[it[0]].push_back({it[1],it[2]});
+        }
+        return adjList;
+    }
 public:
     int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int k) {
-        vector<vector<pair<int,int>>> adj(n);
         
-        for(auto it:flights){
-            adj[it[0]].push_back({it[1],it[2]});
-        }
+        vector<vector<pair<int,int>>> adj=getAdjList(flights,n);
         queue<flight> que;
         que.push({0,src,0});
         vector<int> dist(n,1e9);
