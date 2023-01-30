@@ -1,14 +1,20 @@
 class Solution {
 private:
-    int solveTribonacci(int n,vector<int>& dp){
-        if(n==0) return 0;
-        if(n==1 || n==2) return 1;
-        if(dp[n]!=-1) return dp[n];
-        return dp[n]=solveTribonacci(n-1,dp)+solveTribonacci(n-2,dp)+solveTribonacci(n-3,dp);
+    int solveTab(int n){
+        vector<int> dp(n+1,0);
+        //base case
+        dp[0]=0;
+        dp[1]=dp[2]=1;
+        if(n<=2) return dp[n];
+        for(int ind=3;ind<=n;ind++){
+            dp[ind]=dp[ind-1]+dp[ind-2]+dp[ind-3];
+        }
+        return dp[n];
     }
 public:
     int tribonacci(int n) {
-        vector<int> dp(n+1,-1);
-        return solveTribonacci(n,dp);
+        if(n==0) return 0;
+        if(n==1 || n==2) return 1;
+        return solveTab(n);
     }
 };
