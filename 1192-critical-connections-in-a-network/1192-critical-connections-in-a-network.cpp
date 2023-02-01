@@ -1,46 +1,47 @@
 class Solution {
 private:
-    void dfs(int node, int parent, vector<int>& vis, vector<int> adj[], vector<int>& insertTime,vector<int>& low,
-            vector<vector<int>>& bridges,int &timer){
+    void traverseDFS(int node,int parent,vector<int> &vis,vector<int> adjList[],
+                     vector<vector<int>>& bridges,vector<int>& insertTime,vector<int>& low,
+                     int &timer){
         vis[node]=1;
-        insertTime[node]=low[node]=timer;
+        low[node]=insertTime[node]=timer;
         timer++;
         
-        for(auto it:adj[node]){
+        for(auto it:adjList[node]){
             if(it==parent) continue;
             if(!vis[it]){
-                dfs(it,node,vis,adj,insertTime,low,bridges,timer);
-                low[node]=min(low[node],low[it]);
-                if(low[it] > insertTime[node]){
+                traverseDFS(it,node,vis,adjList,bridges,insertTime,low,timer);
+                low[node]=min(low[it],low[node]);
+                //checking if it's a bridge
+                if(low[it]> insertTime[node]){
                     bridges.push_back({it,node});
                 }
+                
             }
             else{
-                low[node]=min(low[node],low[it]);
+                low[node]=min(low[it],low[node]);
             }
         }
-        
     }
 public:
     vector<vector<int>> criticalConnections(int n, vector<vector<int>>& connections) {
-        vector<int> adj[n];
+        //step1 : make the adjlist
+        vector<int> adjList[n];
         for(auto it:connections){
-            adj[it[0]].push_back(it[1]);
-            adj[it[1]].push_back(it[0]);
+            adjList[it[0]].push_back(it[1]);
+            adjList[it[1]].push_back(it[0]);
         }
-        
-        vector<int> vis(n,0);
-        vector<int> low(n);
+        //now 3 arrays will be reqd.
         vector<int> insertTime(n);
-        
-        vector<vector<int>> bridges;
+        vector<int> low(n);
+        vector<int> vis(n,0);
         int timer=1;
+        vector<vector<int>> bridges;
         for(int ind=0;ind<n;ind++){
             if(!vis[ind]){
-                dfs(ind,-1,vis,adj,insertTime,low,bridges,timer);
+                traverseDFS(ind,-1,vis,adjList,bridges,insertTime,low,timer);
             }
         }
-        
         return bridges;
     }
 };
