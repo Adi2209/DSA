@@ -11,7 +11,7 @@
  */
 class Solution {
 private:
-    vector<TreeNode*> solveRec(int n){
+    vector<TreeNode*> solveMemo(int n,unordered_map<int,vector<TreeNode*>>& mp){
         //base case
         vector<TreeNode*> allCombinations;
         if (n<1 || n%2==0){
@@ -20,13 +20,14 @@ private:
         }
         if(n==1){
             allCombinations.push_back(new TreeNode(0));
+            mp[1]=allCombinations;
             return allCombinations;
         }        
-        
+        if(mp.find(n)!=mp.end()) return mp[n];
         for(int i=1;i<n;i+=2){
             //recursion will see and get the ans for each 'n'
-            vector<TreeNode*> leftSubTree=solveRec(i);
-            vector<TreeNode*> rightSubTree=solveRec(n-i-1);
+            vector<TreeNode*> leftSubTree=solveMemo(i,mp);
+            vector<TreeNode*> rightSubTree=solveMemo(n-i-1,mp);
             
             for(int j=0;j<leftSubTree.size();j++){
                 for(int k=0;k<rightSubTree.size();k++){
@@ -38,10 +39,12 @@ private:
                 }
             }
         }
-        return allCombinations;
+        return mp[n]=allCombinations;
     }
 public:
     vector<TreeNode*> allPossibleFBT(int n) {
-        return solveRec(n);
+        unordered_map<int,vector<TreeNode*>> mp;
+        // n --> vec
+        return solveMemo(n,mp);
     }
 };
