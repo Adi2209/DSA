@@ -3,35 +3,48 @@ public:
     MyQueue() {
         
     }
-    //we will take two stacks input and output
     stack<int> input;
     stack<int> output;
-    
     void push(int x) {
         input.push(x);
     }
     
     int pop() {
-        
-        if (output.empty())
-            while (input.size())
-                output.push(input.top()), input.pop();
-
-        int temp = output.top();
-        output.pop(); 
-        return temp;
+        int ans=0;
+        if(!output.empty()){
+          ans=output.top();
+          output.pop();  
+        } 
+        else{
+            while(!input.empty()){
+                output.push(input.top());
+                input.pop();
+            }
+            ans=output.top();
+            output.pop();
+        }
+        return ans;
     }
     
     int peek() {
-        if (output.empty())
-            while (input.size())
-                output.push(input.top()), input.pop();
-        return output.top();
+        int ans=0;
+        if(!output.empty()){
+          ans=output.top();
+          // output.pop();  
+        } 
+        else{
+            while(!input.empty()){
+                output.push(input.top());
+                input.pop();
+            }
+            ans=output.top();
+            // output.pop();
+        }
+        return ans;
     }
     
     bool empty() {
-    return input.empty() && output.empty();        
-        
+        return output.empty() && input.empty();
     }
 };
 
