@@ -1,11 +1,6 @@
 class Solution {
 public:
     int countOdds(int low, int high) {
-        int oddCnt=0;
-        while(low<=high){
-            if(low%2!=0) oddCnt++;
-            low++;
-        }
-        return oddCnt;
+        return (low%2==0 && high%2==0) ? (high-low)/2 : (high-low)/2 +1;
     }
 };
