@@ -47,7 +47,7 @@ public:
             int col=q.front().c;
             int time=q.front().t;
             q.pop();
-            minTime=max(minTime,time);
+            minTime=time;
             vector<int> delRow={-1,0,1,0};
             vector<int> delCol={0,1,0,-1};
             for(int ind=0;ind<4;ind++){
