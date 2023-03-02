@@ -11,9 +11,9 @@
  */
 class Solution {
 public:
-     int diff = INT_MIN; // we want max difference
+     
     
-    void getMax(TreeNode *root, int mx, int mi){
+    void getMax(TreeNode *root, int mx, int mi,int& diff){
         
         if(!root) return;
         
@@ -23,17 +23,17 @@ public:
         
         diff = max(diff, mx - mi); // store maximum difference
         
-        getMax(root->left,mx,mi);
-        getMax(root->right,mx,mi);
+        getMax(root->left,mx,mi,diff);
+        getMax(root->right,mx,mi,diff);
     }
     
     int maxAncestorDiff(TreeNode* root) {
         
         if(!root) return 0;
-        
+        int diff = INT_MIN; // we want max difference
         int mx = INT_MIN, mi = INT_MAX;
 
-        getMax(root,mx,mi);
+        getMax(root,mx,mi,diff);
         
         return diff;
     }
