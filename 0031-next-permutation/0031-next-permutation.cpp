@@ -1,29 +1,29 @@
 class Solution {
 public:
     void nextPermutation(vector<int>& nums) {
-        //first we will find a breakpoint i.e. nums[i+1]>nums[i];
         int n=nums.size();
-        int breakPoint=-1;
-        
+        int breakpoint=-1;
         for(int ind=n-2;ind>=0;ind--){
-            if(nums[ind]<nums[ind+1]){
-                breakPoint=ind;
+            if(nums[ind+1]>nums[ind]){
+                //breakpoint found
+                breakpoint=ind;
                 break;
             }
         }
-        //now if no breakpoint then reverse the array and get the ans
-        if(breakPoint==-1) reverse(nums.begin(),nums.end());
-        //finding the element with whom we can swap
+        //now if no breakpoint found this means that the array is sorted in decreasing order
+        //so now we will reverse the array and return it
+        if(breakpoint==-1){
+            reverse(nums.begin(),nums.end());
+        }
         else{
-            for(int ind=n-1;ind>breakPoint;ind--){
-                if(nums[ind]>nums[breakPoint]){
-                    swap(nums[ind],nums[breakPoint]);
-                    reverse(nums.begin()+breakPoint+1,nums.end());
+            //if breakpoint found, now find the element greater to the arr[ind] on the right half
+            for(int ind=n-1;ind>breakpoint;ind--){
+                if(nums[breakpoint]<nums[ind]){
+                    swap(nums[breakpoint],nums[ind]);
+                    reverse(nums.begin()+breakpoint+1,nums.end());
                     break;
                 }
             }
-        }
-        
-        
+        }        
     }
 };
