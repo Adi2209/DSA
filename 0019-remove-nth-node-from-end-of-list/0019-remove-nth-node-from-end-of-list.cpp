@@ -11,13 +11,15 @@
 class Solution {
 public:
     ListNode* removeNthFromEnd(ListNode* head, int n) {
-        ListNode* slow=head, *fast=head;
-        
+        if(!head) return head;
+        ListNode* fast=head,*slow=head;
+        //traversing fast to the nth node from start
         while(n--) fast=fast->next;
-        if(!fast) return head->next;
+        // now we will traverse to the end of the list and then slow will point to the nodeToBeDeleted
+        if(!fast) return head->next;//this means we have to remove the head , this will happen when the n will be equal to the length of the linked list
         while(fast->next){
-            slow=slow->next;
             fast=fast->next;
+            slow=slow->next;
         }
         ListNode* nodeToDel=slow->next;
         slow->next=nodeToDel->next;
