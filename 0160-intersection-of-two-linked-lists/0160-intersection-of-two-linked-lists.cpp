@@ -11,16 +11,13 @@ public:
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
         if(!headA) return headB;
         if(!headB) return headA;
-        
-        ListNode* d1=headA;
-        ListNode* d2=headB;
-        
-        while(d1!=d2){
-            if(d1) d1=d1->next;
-            else d1=headB;
-            if(d2) d2=d2->next;
-            else d2=headA;
+        ListNode* tempA=headA, * tempB=headB;
+        while(tempA!=tempB){
+            if(!tempA) tempA=headB;
+            else tempA=tempA->next;
+            if(!tempB) tempB=headA;
+            else tempB=tempB->next;
         }
-        return d1;
+        return tempA;
     }
 };
