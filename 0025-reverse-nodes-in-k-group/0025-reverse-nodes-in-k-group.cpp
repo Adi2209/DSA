@@ -17,7 +17,7 @@ public:
             if(temp==NULL) return head;
             temp=temp->next;
         }
-        
+        //solve for one
         ListNode* curr=head, *prev=NULL, *nxt=NULL;
         for(int ind=0;ind<k;ind++){
             nxt=curr->next;
@@ -25,6 +25,8 @@ public:
             prev=curr;
             curr=nxt;
         }
+        //recursion will solve further cases
+        
         head->next=reverseKGroup(curr,k);
         return prev;
     }
