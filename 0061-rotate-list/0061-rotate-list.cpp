@@ -11,21 +11,19 @@
 class Solution {
 public:
     ListNode* rotateRight(ListNode* head, int k) {
-        if(!head || !head->next) return head;
+        if(!head || !head->next || k==0) return head;
         int len=1;
         ListNode* curr=head;
         while(curr->next!=NULL){
             curr=curr->next;
             len++;
         }
-        //joining curr with head as curr is at last node
+        cout<<"len: "<<len<<endl;
         curr->next=head;
         k=k%len;
         k=len-k;
-        while(k){
-            curr=curr->next;
-            k--;
-        }
+        while(k--) curr=curr->next;
+        
         head=curr->next;
         curr->next=NULL;
         return head;
