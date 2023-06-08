@@ -5,7 +5,7 @@ public:
         int left=0, right=n-1;
         int ans=0,leftMax=-1,rightMax=-1;
         
-        while(left<right){
+        while(left<=right){
             // this will check automatically the available right building to store water
             if(height[left]<=height[right]){
                 //if it is the leftMax then it can't store water
