@@ -12,10 +12,9 @@ private:
             return;
         }
         //include
-         solve(ind+1,sum,ans,arr,n);
         solve(ind+1,sum+arr[ind],ans,arr,n);
         //exclude
-       
+        solve(ind+1,sum,ans,arr,n);
     }
 public:
     vector<int> subsetSums(vector<int> arr, int N)
