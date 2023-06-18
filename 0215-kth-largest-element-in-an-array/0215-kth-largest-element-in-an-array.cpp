@@ -10,6 +10,7 @@ public:
         while(k-- && !pq.empty()){
             ans=pq.top();
             pq.pop();
+            cout<<ans<<" "<<endl;
         }
         return ans;
     }
