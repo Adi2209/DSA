@@ -1,16 +1,14 @@
 class Solution {
 public:
     int largestAltitude(vector<int>& gain) {
-        int n=gain.size();
-        vector<int> res(n+1);
-        res[0]=0;
-        for(int ind=0;ind<n;ind++){
-            res[ind+1]=res[ind]+gain[ind];
+        // support variables
+        int res = 0, curr = 0;
+        for (int n: gain) {
+            // updating curr
+            curr += n;
+            // updating res
+            res = max(res, curr);
         }
-        int ans=INT_MIN;
-        for(auto it:res){
-            ans=max(ans,it);
-        }
-        return ans;
+        return res;
     }
 };
