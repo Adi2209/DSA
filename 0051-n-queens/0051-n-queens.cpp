@@ -1,53 +1,32 @@
 class Solution {
 private:
-    bool isValid(int row,int col,vector<string>& board, int n){
-        int dupRow=row;
-        int dupCol=col;
-        
-        //checking for upper left diagonal
-        while(dupRow>=0 && dupCol>=0){
-            if(board[dupRow][dupCol]=='Q') return false;
-            dupRow--;
-            dupCol--;
+    void solve(int col, vector < string > & board, vector < vector < string >> & ans, vector < int > & leftrow, vector < int > & upperDiagonal, vector < int > & lowerDiagonal, int n) {
+      if (col == n) {
+        ans.push_back(board);
+        return;
+      }
+      for (int row = 0; row < n; row++) {
+        if (leftrow[row] == 0 && lowerDiagonal[row + col] == 0 && upperDiagonal[n - 1 + col - row] == 0) {
+          board[row][col] = 'Q';
+          leftrow[row] = 1;
+          lowerDiagonal[row + col] = 1;
+          upperDiagonal[n - 1 + col - row] = 1;
+          solve(col + 1, board, ans, leftrow, upperDiagonal, lowerDiagonal, n);
+          board[row][col] = '.';
+          leftrow[row] = 0;
+          lowerDiagonal[row + col] = 0;
+          upperDiagonal[n - 1 + col - row] = 0;
         }
-        dupRow=row;
-        dupCol=col;
-        //checking for lower left diagonal
-        while(dupRow<n && dupCol>=0){
-            if(board[dupRow][dupCol]=='Q') return false;
-            dupRow++;
-            dupCol--;
-        }
-        dupRow=row;
-        dupCol=col;
-        //checking for left col
-        while(dupCol>=0){
-            if(board[dupRow][dupCol]=='Q') return false;
-            dupCol--;
-        }
-        
-        return true;        
-    }
-    void solve(int col,vector<string>& board,vector<vector<string>>& ans,int n){
-        if(col==n){
-            ans.push_back(board);
-            return;
-        }
-        
-        for(int row=0;row<n;row++){
-            if(isValid(row,col,board,n)){
-                board[row][col]='Q';
-                solve(col+1,board,ans,n);
-                board[row][col]='.';
-            }
-        }
+      }
     }
 public:
     //brute force solution
     vector<vector<string>> solveNQueens(int n) {
         vector<string> board(n,string(n,'.'));
         vector<vector<string>> ans;
-        solve(0,board,ans,n);
+        //to check in left col
+        vector<int> leftRow(n,0),upperDiagonal(2*n-1,0), lowerDiagonal(2*n-1,0);
+        solve(0,board,ans,leftRow,upperDiagonal,lowerDiagonal,n);
         return ans;
     }
 };
