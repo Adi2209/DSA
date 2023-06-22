@@ -10,7 +10,7 @@ public:
             //if the left side is sorted 
             else if(nums[low]<=nums[mid]){
                 //if in the left sorted part
-                if(nums[low]<= target && target<=nums[mid]){
+                if(nums[low]<= target && target<nums[mid]){
                     high=mid-1;
                 }
                 else low=mid+1;
@@ -18,7 +18,7 @@ public:
             // if right side is sorted
             else{
                 //if in the right sorted part
-                if(nums[mid]<=target && nums[high]>=target){
+                if(nums[mid]<target && nums[high]>=target){
                     low=mid+1;
                 }
                 else high=mid-1;
