@@ -16,22 +16,18 @@ public:
         if(!root) return ans;
         queue<TreeNode*> q;
         q.push(root);
-        bool leftToRight=true;
+        bool leftToRight=1;
+        
         while(!q.empty()){
             int size=q.size();
             vector<int> row(size);
             for(int ind=0;ind<size;ind++){
                 TreeNode* frontNode=q.front();
                 q.pop();
-                int index;
-                if(leftToRight) index=ind;
-                else index=size-ind-1;
-                
+                int index=leftToRight ? ind:(size-ind-1);
                 row[index]=frontNode->val;
-                if(frontNode->left)
-                    q.push(frontNode->left);
-                if(frontNode->right)
-                    q.push(frontNode->right);
+                if(frontNode->left) q.push(frontNode->left);
+                if(frontNode->right) q.push(frontNode->right);
             }
             leftToRight=!leftToRight;
             ans.push_back(row);
