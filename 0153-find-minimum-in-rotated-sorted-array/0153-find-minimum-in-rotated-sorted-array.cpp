@@ -6,6 +6,11 @@ public:
         int mini=1e9;
         while(low<=high){
             int mid=low+(high-low)/2;
+            //if the earch space is already sorted
+            if(nums[low]<=nums[high]){
+                mini=min(mini,nums[low]);
+                break;
+            }
             if(nums[low]<=nums[mid]){
                 //left half is sorted
                 mini=min(mini,nums[low]);
