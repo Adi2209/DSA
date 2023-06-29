@@ -3,7 +3,7 @@ public:
     string removeDuplicates(string s, int k) {
         stack<pair<int,int>> st;
         int n=s.size();
-        for(int ind=0;ind<n;ind++){
+        for(int ind=n-1;ind>=0;ind--){
             if(!st.empty() && s[ind]==st.top().first)
                 st.top().second++;
             else{
@@ -21,7 +21,7 @@ public:
                 ans+=tp.first;
             }
         }
-        reverse(ans.begin(),ans.end());
+        // reverse(ans.begin(),ans.end());
         return ans;
     }
 };
