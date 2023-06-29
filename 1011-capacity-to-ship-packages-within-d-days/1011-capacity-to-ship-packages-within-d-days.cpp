@@ -1,41 +1,39 @@
 class Solution {
 private:
-    bool isPossible(vector<int> weights, int days,int mid){
-        int weightSum=0;
-        int daysCount=1;
-        for(int i=0;i<weights.size();i++){
-            if(weightSum+weights[i] <= mid){
-                weightSum+=weights[i];
+    int getSum(vector<int>& weights){
+        int sum=0;
+        for(auto it:weights){
+            sum+=it;
+        }
+        return sum;
+    }
+    bool canShip(int capacity,vector<int>& weights,int threshold){
+        int load=0;
+        int days=1;
+        for(int ind=0;ind<weights.size();ind++){
+            if(load+weights[ind]>capacity){
+                load=weights[ind];
+                days++;
             }
             else{
-                daysCount++;
-                weightSum=0;
-                if(daysCount> days || weights[i]>mid){
-                    return false; 
-                }     
-                 weightSum+=weights[i];      
+                load+=weights[ind];
             }
+            if(days>threshold) return false;
         }
-          return true;
+        return true;
     }
 public:
     int shipWithinDays(vector<int>& weights, int days) {
-        
-        int sum=0;
-        
-        for(int i=0;i<weights.size();i++) sum+=weights[i];
-        int s=0;
-        int e=sum;
-        int mid=s+(e-s)/2;
-        int ans=-1;
-        while(s<=e){
-            mid=s+(e-s)/2;
-            if(isPossible(weights,days,mid)){
+        int low=*max_element(weights.begin(),weights.end());
+        int high=getSum(weights);
+        int ans=high;
+        while(low<=high){
+            int mid=low+(high-low)/2;
+            if(canShip(mid,weights,days)){
                 ans=mid;
-                e=mid-1;
+                high=mid-1;
             }
-            else
-                s=mid+1;     
+            else low=mid+1;
         }
         return ans;
     }
