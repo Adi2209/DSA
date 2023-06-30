@@ -11,20 +11,19 @@
  */
 class Solution {
 private:
-    int solve(TreeNode* root,int& diameter){
-        if(!root) return 0;
-        int leftHalf=solve(root->left,diameter);
-        int rightHalf=solve(root->right,diameter);
+    int traverseDFS(TreeNode* root,int& diameter){
+        if(root==NULL) return 0;
         
-        diameter=max(diameter,leftHalf+rightHalf);
+        int leftHalf=traverseDFS(root->left,diameter);
+        int rightHalf=traverseDFS(root->right,diameter);
+        diameter=max(diameter,rightHalf+leftHalf);
+        
         return 1+max(rightHalf,leftHalf);
-        
     }
 public:
     int diameterOfBinaryTree(TreeNode* root) {
-        if(!root) return 0;
         int diameter=0;
-        solve(root,diameter);
+        traverseDFS(root,diameter);
         return diameter;
     }
 };
