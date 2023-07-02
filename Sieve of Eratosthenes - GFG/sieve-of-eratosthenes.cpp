@@ -12,10 +12,9 @@ public:
         // Write Your Code here
         
         vector<int> ans;
-        ans.push_back(2);
-        for(int ind=3;ind<=n;ind++){
+        for(int ind=2;ind<=n;ind++){
             bool flag=false;
-            for(int j=2;j<ind;j++){
+            for(int j=2;j<=ind/2;j++){
                 if(ind%j==0){
                     flag=true;
                     break;
