@@ -14,7 +14,7 @@ public:
         vector<int> ans;
         for(int ind=2;ind<=n;ind++){
             bool flag=false;
-            for(int j=2;j<=ind/2;j++){
+            for(int j=2;j*j<=ind;j++){
                 if(ind%j==0){
                     flag=true;
                     break;
