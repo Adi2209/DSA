@@ -1,26 +1,26 @@
 class Solution {
 public:
     int findMin(vector<int>& nums) {
-        int n = nums.size();
-        int high = n-1, low =0;
-        int ans = 1e9;
-        
+        int n=nums.size();
+        int low=0,high=n-1;
+        int mini=1e9;
         while(low<=high){
-            int mid = low+(high-low)/2;
+            int mid=low+(high-low)/2;
+            //if the earch space is already sorted
             if(nums[low]<=nums[high]){
-                ans = min(ans,nums[low]);
+                mini=min(mini,nums[low]);
                 break;
             }
             if(nums[low]<=nums[mid]){
-                ans = min(ans,nums[mid]);
+                //left half is sorted
+                mini=min(mini,nums[low]);
                 low=mid+1;
             }
             else{
-                ans = min(ans,nums[mid]);
+                mini=min(mini,nums[mid]);
                 high=mid-1;
             }
         }
-        return ans;
-        
+        return mini;
     }
 };
