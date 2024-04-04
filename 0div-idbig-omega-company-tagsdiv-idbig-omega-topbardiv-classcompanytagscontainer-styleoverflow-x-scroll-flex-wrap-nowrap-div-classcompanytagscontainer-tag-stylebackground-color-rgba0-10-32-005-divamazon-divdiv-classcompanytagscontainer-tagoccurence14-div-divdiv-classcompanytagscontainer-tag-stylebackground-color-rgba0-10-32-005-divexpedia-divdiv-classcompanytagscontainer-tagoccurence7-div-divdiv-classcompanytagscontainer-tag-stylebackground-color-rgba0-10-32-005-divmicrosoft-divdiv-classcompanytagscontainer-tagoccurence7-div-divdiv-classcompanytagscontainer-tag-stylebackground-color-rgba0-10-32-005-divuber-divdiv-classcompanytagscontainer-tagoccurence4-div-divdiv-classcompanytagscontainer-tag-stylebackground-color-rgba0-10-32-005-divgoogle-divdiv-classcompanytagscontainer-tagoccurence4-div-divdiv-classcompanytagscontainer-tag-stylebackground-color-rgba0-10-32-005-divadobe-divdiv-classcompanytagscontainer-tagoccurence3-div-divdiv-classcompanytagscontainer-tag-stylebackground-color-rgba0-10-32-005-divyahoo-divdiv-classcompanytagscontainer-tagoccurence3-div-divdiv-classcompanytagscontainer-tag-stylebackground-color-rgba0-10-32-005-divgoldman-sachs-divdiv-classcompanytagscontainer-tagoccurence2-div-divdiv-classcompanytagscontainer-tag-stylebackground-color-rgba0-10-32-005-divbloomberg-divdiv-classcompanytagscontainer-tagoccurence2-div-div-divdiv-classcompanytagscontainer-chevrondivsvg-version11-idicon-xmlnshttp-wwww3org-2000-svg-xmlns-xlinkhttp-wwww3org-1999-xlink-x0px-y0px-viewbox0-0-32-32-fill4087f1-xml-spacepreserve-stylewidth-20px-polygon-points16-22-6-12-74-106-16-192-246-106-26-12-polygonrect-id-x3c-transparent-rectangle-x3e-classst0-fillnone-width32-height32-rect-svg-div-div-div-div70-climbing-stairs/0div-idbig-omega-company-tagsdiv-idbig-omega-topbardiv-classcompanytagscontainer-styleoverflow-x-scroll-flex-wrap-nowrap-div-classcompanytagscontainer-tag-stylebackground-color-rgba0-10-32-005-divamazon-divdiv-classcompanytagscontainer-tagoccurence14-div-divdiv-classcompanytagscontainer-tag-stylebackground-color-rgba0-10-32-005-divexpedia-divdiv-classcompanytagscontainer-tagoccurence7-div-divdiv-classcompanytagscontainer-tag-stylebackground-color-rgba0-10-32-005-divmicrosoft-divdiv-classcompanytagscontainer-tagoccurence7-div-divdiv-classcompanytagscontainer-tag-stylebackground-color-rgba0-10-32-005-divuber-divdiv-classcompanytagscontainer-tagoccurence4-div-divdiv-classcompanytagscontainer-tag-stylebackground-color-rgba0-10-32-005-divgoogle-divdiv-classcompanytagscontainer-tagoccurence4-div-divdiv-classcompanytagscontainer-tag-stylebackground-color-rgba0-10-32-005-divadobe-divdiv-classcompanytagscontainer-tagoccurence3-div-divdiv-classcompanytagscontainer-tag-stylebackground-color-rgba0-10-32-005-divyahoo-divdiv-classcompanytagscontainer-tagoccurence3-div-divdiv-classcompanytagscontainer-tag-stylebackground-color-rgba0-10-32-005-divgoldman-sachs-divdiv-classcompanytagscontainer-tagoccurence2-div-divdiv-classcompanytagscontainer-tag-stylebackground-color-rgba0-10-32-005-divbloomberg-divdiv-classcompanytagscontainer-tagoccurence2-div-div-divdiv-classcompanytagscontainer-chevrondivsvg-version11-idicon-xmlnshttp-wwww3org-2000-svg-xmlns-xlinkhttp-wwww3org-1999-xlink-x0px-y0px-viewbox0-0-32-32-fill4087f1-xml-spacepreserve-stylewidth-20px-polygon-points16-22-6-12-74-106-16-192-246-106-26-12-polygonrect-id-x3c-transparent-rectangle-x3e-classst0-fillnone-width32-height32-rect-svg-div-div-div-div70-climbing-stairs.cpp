@@ -1,14 +1,17 @@
 class Solution {
 private:
-    int solve(int n,vector<int>& memo){
+    int solve(int n){
         // base case
-        if(n==0 || n==1) return 1;
-        if(memo[n]!=-1) return memo[n];
-        return memo[n]=solve(n-1,memo)+solve(n-2,memo);
+        vector<int> dp(n+1);
+        dp[0] =1;
+        dp[1]=1;
+        for(int ind=2;ind<=n;ind++){
+            dp[ind]=dp[ind-1]+dp[ind-2];
+        }
+        return dp[n];
     }
 public:
     int climbStairs(int n) {
-        vector<int> memo(n+1,-1);
-        return solve(n,memo);
+        return solve(n);
     }
 };
