@@ -2,13 +2,15 @@ class Solution {
 private:
     int solve(int n){
         // base case
-        vector<int> dp(n+1);
-        dp[0] =1;
-        dp[1]=1;
+        if(n==0 || n==1) return 1;
+        int prev = 1;
+        int curr=1;
         for(int ind=2;ind<=n;ind++){
-            dp[ind]=dp[ind-1]+dp[ind-2];
+            int temp = curr;
+            curr = prev+curr;
+            prev = temp;
         }
-        return dp[n];
+        return curr;
     }
 public:
     int climbStairs(int n) {
