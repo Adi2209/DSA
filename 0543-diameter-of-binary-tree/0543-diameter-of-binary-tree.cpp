@@ -12,17 +12,18 @@
 class Solution {
 private:
     int traverseDFS(TreeNode* root,int& diameter){
-        if(root==NULL) return 0;
+        if(!root) return 0;
         
-        int leftHalf=traverseDFS(root->left,diameter);
-        int rightHalf=traverseDFS(root->right,diameter);
-        diameter=max(diameter,rightHalf+leftHalf);
+        int leftHeight = traverseDFS(root->left,diameter);
+        int rightHeight = traverseDFS(root->right,diameter);
         
-        return 1+max(rightHalf,leftHalf);
+        diameter = max(diameter,leftHeight+rightHeight);
+        
+        return 1 + max(leftHeight,rightHeight);
     }
 public:
     int diameterOfBinaryTree(TreeNode* root) {
-        int diameter=0;
+        int diameter = 0;
         traverseDFS(root,diameter);
         return diameter;
     }
