@@ -1,19 +1,19 @@
 class Solution {
-private:
-    int solve(int i,int j,string& s,string& t,vector<vector<int>>& dp){
-        if(i==s.size() || j== t.size()) return 0;
-        if(dp[i][j]!=-1) return dp[i][j];
-        int include=0;
-        if(s[i] == t[j]) include = 1+ solve(i+1,j+1,s,t,dp);
-        int exclude = 0+ max(solve(i+1,j,s,t,dp), solve(i,j+1,s,t,dp));
-        
-        return dp[i][j] = max(include,exclude);
-    }
 public:
-    int longestCommonSubsequence(string text1, string text2) {
-        int n=text1.size();
-        int m=text2.size();
-        vector<vector<int>> dp(n,vector<int>(m,-1));
-        return solve(0,0,text1,text2,dp);
+    int longestCommonSubsequence(string s, string t) {
+        int n=s.size();
+        int m=t.size();
+        vector<vector<int>> dp(n+1,vector<int>(m+1,0));
+        for(int ind = 0;ind<=n;ind++) dp[ind][0] = 0;
+        for(int ind = 0;ind<=m;ind++) dp[0][ind] = 0;
+        
+        for(int i = 1;i<=n;i++){
+            for(int j=1;j<=m;j++){
+                if(s[i-1] == t[j-1]) dp[i][j] = 1+ dp[i-1][j-1];
+                else dp[i][j] = 0+ max(dp[i][j-1], dp[i-1][j]);
+            }
+        }
+        return dp[n][m];
+        
     }
 };
