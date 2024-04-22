@@ -3,15 +3,11 @@ private:
     int solve(int i,int j,string& s,string& t,vector<vector<int>>& dp){
         if(i==s.size() || j== t.size()) return 0;
         if(dp[i][j]!=-1) return dp[i][j];
-         int ans=0;
+        int include=0;
+        if(s[i] == t[j]) include = 1+ solve(i+1,j+1,s,t,dp);
+        int exclude = 0+ max(solve(i+1,j,s,t,dp), solve(i,j+1,s,t,dp));
         
-        if(s[i]==t[j]){
-             ans=1+solve(i+1,j+1,s,t,dp);
-        }
-        else{
-             ans= max(solve(i+1,j,s,t,dp),solve(i,j+1,s,t,dp));
-        }
-        return dp[i][j]=ans;
+        return dp[i][j] = max(include,exclude);
     }
 public:
     int longestCommonSubsequence(string text1, string text2) {
